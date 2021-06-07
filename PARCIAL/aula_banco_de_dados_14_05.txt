@@ -1,0 +1,72 @@
+-- os índices que foram criados pelo usuários conectados.
+SELECT INDEX_NAME FROM USER_INDEXES;
+
+--criação de índices.
+CREATE INDEX "nome do índice"
+ON "nome da tabela"(atributo(s))
+
+Exemplos:
+CREATE INDEX "nome do índice"
+ON "nome da tabela" (atributo(s))
+
+--excluir um índice
+DROP INDEX "nome do índice"
+
+ASCII() - Retrona o valor ASCII de um caractere(recebe como parâmetro um caractere)
+SELECT ASCII('A') FROM DUAL;
+SELECT ASCII('E'), ASCII('e')FROM DUAL;
+
+CHR() - retorna o caractere de um valor ASCII(recebe um valor ASCII)
+SELECT CHR(69) FROM DUAL;
+
+
+UPPER() - colocar um caractere ou uma string em caixa alta (maíusculo)
+SELECT UPPER(NOM_CATEGORIA) FROM CATEGORIA;
+
+LOWER() - colocar um caractere ou string em caixa baixa
+SELECT LOWER(NOM_CATEGORIA) FROM CATEGORIA;
+
+INSERT INTO CATEGORIA VALUES (SEQ_ID_CATEGORIA.NEXTVAL,UPPER('Grãos/Achocolatados'));
+
+INITCAP() - coloca as inciais das strings em maiusculo (maiusculo/minusculo)
+SELECT INITCAP(NOM_CATEGORIA) FROM CATEGORIA;
+
+LENGTH() - retirna a quantidade de caracteres de um string
+SELECT NOM_CATEGORIA, LENGTH(NOM_CATEGORIA) QTD FROM CATEGORIA;
+
+
+CREATE TABLE CLIENTE
+(ID_CLIENTE NUMBER (6),
+NOM_CLIENTE VARCHAR2(30),
+CPF_CLIENTE CHAR(11),
+CONSTRAINT PK_CLIENTE PRIMARY KEY(ID_CLIENTE)
+);
+
+INSERT INTO CLIENTE VALUES (1,'MÁRCIO GABRIEL','12345678901');
+SUBSTR() - permite percorrer uma string e retornar parte dela.
+Sintaxe:
+SUBSTR(string,posição inicial, quantidade de posições que serão percorridas)
+Exemplo:
+SELECT SUBSTR(CPF_CLIENTE,1,3) || '.' ||SUBSTR(CPF_CLIENTE,4,3)|| '.' || 
+SUBSTR(CPF_CLIENTE,7,3) || '-'|| SUBSTR(CPF_CLIENTE,10) CPF FROM CLIENTE;
+
+
+REPLACE() - substitui um valor (string) por outro.
+Sintaxe:
+REPLACE(string, valor a ser substotuido, o novo valor)
+Exemplo:
+SELECT REPLACE(NOM_CLIENTE,'MÁRCIO','ARQUEDUQUE')NOME FROM CLIENTE;
+
+RPAD() - permite o alinhamento a direita.
+Sintaxe:
+RPAD(string,quantidade de posições,caractere de formatação)
+Exemplo:
+SELECT RPAD(NOM_PRODUTO,20,'.'),VLR_PRODUTO
+VALOR FROM PRODUTO;
+
+LPAD() - permite o alinhamento a esquerda
+Sintaxe: LPAD(string,quantidade de posições,caractere de formatação)
+Exemplo:
+SELECT LPAD(NOM_PRODUTO,20,'.'),VLR_PRODUTO
+VALOR FROM PRODUTO;
+

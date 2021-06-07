@@ -1,0 +1,100 @@
+EXERCIO LAB BANCO DE DADOS - MÁRCIO GABRIEL. COD: 823815 DIA ENTREGA 18/04/2020.
+
+CRIAÇÃO DAS TABELAS---------------------------------------------------------------
+
+CREATE TABLE CATEGORIA(
+id_categoria NUMBER(2),
+nom_categoria VARCHAR2(20),
+CONSTRAINT pk_categoria primary key (id_categoria)
+);
+
+
+CREATE TABLE PRODUTO(
+id_produto NUMBER(4),
+id_categoria NUMBER(2),
+nom_produto VARCHAR2(30),
+vlr_produto NUMBER(7,2),
+CONSTRAINT pk_produto primary key (id_produto),
+CONSTRAINT fk_produto_categoria FOREIGN KEY (id_categoria) REFERENCES CATEGORIA
+);
+
+
+
+CREATE TABLE ORCAMENTO(
+id_orcamento NUMBER(6),
+dta_orcamento DATE,
+obs_orcamento VARCHAR2(50),
+CONSTRAINT pk_orcamento PRIMARY KEY (id_orcamento)
+);
+
+
+CREATE TABLE ITEM_ORCAMENTO(
+id_produto NUMBER(4),
+id_orcamento NUMBER(6),
+qtd_orcamento NUMBER(4),
+vlr_item_orcamento NUMBER(7,2),
+CONSTRAINT pk_item_orcamento PRIMARY KEY (id_produto,id_orcamento),
+CONSTRAINT fk_item_orcamento_produto FOREIGN KEY (id_produto) REFERENCES PRODUTO,
+CONSTRAINT fk_item_orcamento_orcamento FOREIGN KEY (id_orcamento) REFERENCES ORCAMENTO
+);
+
+CRIAÇÃO SEQUENCIA------------------------------------------------------------------------------------------------------
+
+GRANT CREATE ANY SEQUENCE, ALTER ANY SEQUENCE, DROP ANY SEQUENCE, SELECT ANY SEQUENCE TO "MARCIOGABRIEL";
+-- GARAnTINDO QUE MEU USUARIO POSSA MANIPULAR AS SEQUÊNCIAS. 
+
+		QUESTÃO NUMERO 1.
+CREATE SEQUENCE seq_num_orcamento
+  START WITH 1
+  INCREMENT BY 1
+  MINVALUE 1
+  MAXVALUE 999999
+  NOCYCLE;
+
+
+ CREATE SEQUENCE seq_num_categoria
+  START WITH 1
+  INCREMENT BY 1
+  MINVALUE 1
+  MAXVALUE 999999
+  NOCYCLE;
+
+CREATE SEQUENCE seq_num_produto
+  START WITH 1
+  INCREMENT BY 1
+  MINVALUE 1
+  MAXVALUE 999999
+  NOCYCLE;
+
+INSERINDO DADOS---------------------------------------------------------------------------------------------------
+GRANT UNLIMITED TABLESPACE TO "MARCIOGABRIEL";
+	--GARANTINDO PERMISSÃO TABLESPACE PARA USUARIO.
+INSERT INTO CATEGORIA (id_categoria,nom_categoria) VALUES (seq_num_categoria.NEXTVAL,'BEBIDAS');
+INSERT INTO CATEGORIA (id_categoria,nom_categoria) VALUES (seq_num_categoria.NEXTVAL,'COMIDA');
+INSERT INTO PRODUTO (id_produto,id_categoria,nom_produto,vlr_produto) VALUES (seq_num_produto.NEXTVAL,1,'BRAHMA',3.60);;
+INSERT INTO PRODUTO (id_produto,id_categoria,nom_produto,vlr_produto) VALUES (seq_num_produto.NEXTVAL,2,'ARROZ',5.80);
+INSERT INTO ORCAMENTO (id_orcamento,dta_orcamento,obs_orcamento) VALUES (seq_num_orcamento.NEXTVAL,'17/04/2020','VENDAS DE BEBIDAS');
+INSERT INTO ORCAMENTO (id_orcamento,dta_orcamento,obs_orcamento) VALUES (seq_num_orcamento.NEXTVAL,'17/04/2020','VENDAS DE COMIDA');
+INSERT INTO ITEM_ORCAMENTO (
+  2  id_produto,id_orcamento,qtd_orcamento,vlr_item_orcamento)
+  3  VALUES (
+  4  1,1,3,5000);
+
+INSERT INTO ITEM_ORCAMENTO (
+  2  id_produto,id_orcamento,qtd_orcamento,vlr_item_orcamento)
+  3  VALUES (
+  4  2,1,5,6000);
+
+ INSERT INTO ITEM_ORCAMENTO (
+  2    id_produto,id_orcamento,qtd_orcamento,vlr_item_orcamento)
+  3    VALUES (
+  4    1,2,8,4200);
+
+INSERT INTO ITEM_ORCAMENTO (
+  2    id_produto,id_orcamento,qtd_orcamento,vlr_item_orcamento)
+  3    VALUES (
+  4    2,2,12,5420);
+
+
+
+

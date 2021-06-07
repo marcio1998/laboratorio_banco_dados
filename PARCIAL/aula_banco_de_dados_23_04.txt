@@ -1,0 +1,53 @@
+AULA LAB BANCO DE DADOS. 23/04/2020
+
+COMMIT - ratifica as transações no banco de dadis (gravar fisicamente os registros)
+ROLLBACK - desfaz as transações que ainda não foram ratificafas (desfaz as todas transações até o último 
+commit ou savepoint)
+SAVEPOINT - ponto de salvamento para o gerenciamento de commit/rollback
+
+
+INSERT INTO PRODUTO VALUES (seq_num_produto.NEXTVAL,1,'PRODUTO A', 10);
+ INSERT INTO PRODUTO VALUES (seq_num_produto.NEXTVAL,2,'PRODUTO Z',5.5);
+
+SELECT * FROM PRODUTO;
+
+--mostrar o nome das sequências do usuário conectado
+SELECT SEQUENCE_NAME FROM USER_SEQUENCES;
+
+DESC PRODUTO;
+
+ROLLBACK;
+
+
+SAVEPOINT PA;
+INSERT INTO PRODUTO VALUES (seq_num_produto.NEXTVAL,2,'PRODUTO Z',5.5);
+SAVEPOINT PB;
+INSERT INTO PRODUTO VALUES (seq_num_produto.NEXTVAL,1,'PRODUTO A', 10);
+
+ROLLBACK TO PB;
+
+ALTERAR REGISTROS
+UPDATE - alterar registros de uma tabela de um banco de dados.
+Sintaxe:
+UPDATE "nome da tabela"	 SET  atributo = novo_valor [WHERE condição]
+
+Exemplo:
+UPDATE PRODUTO SET nom_produto = 'PRODUTO C', vlr_produto 4.2 WHERE id_produto = 25;
+
+EXCLUIR REGISTROS
+DELETE - apagar registros de uma tabela de um banco de dados
+Sintaxe:
+DELETE "nome da tabela" [WHERE condição]
+Obs: se não especificar um condição todos os registros serão excluidos.
+
+DECLARE 
+i NUMBER(2);
+BEGIN
+i := 1;
+LOOP
+    EXIT WHEN I > 10;
+    INSERT INTO CATEGORIA (ID_CATEGORIA, NOM_CATEGORIA) VALUES(SEQ_NUM_CATEGORIA.NEXTVAL, 'CATEGORIA ' || i);
+i:=i+1;
+END LOOP;
+END;
+/

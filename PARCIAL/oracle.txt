@@ -1,0 +1,8 @@
+ CREATE USER "C##MARCIOGABRIEL"
+ IDENTIFIED BY "GABRIEL963"
+ DEFAULT TABLESPACE "TESTE"
+ TEMPORARY TABLESPACE "TEMP"
+ ACCOUNT UNLOCK
+ PROFILE DEFAULT;,
+
+alter session set "_oracle_script"=true; troca session oracle para o dba.

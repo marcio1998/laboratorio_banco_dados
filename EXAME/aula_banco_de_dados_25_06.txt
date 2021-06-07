@@ -1,0 +1,50 @@
+FUNCTIONS (FUNÇÕES)
+Programa PL/SQL que permite o retorno de informações.
+
+Sintaxe:
+CREATE [OR REPLACE] FUNCTION "nome da função"
+(parâmetro tipo_do_parâmetro tipo_dado_parâmetro,..)
+RETURN tipo_do_retorno
+IS ou AS
+--declaração das variáveis
+BEGIN
+--instruções PL/SQL
+RETURN o que será rertornado
+END;
+
+--função para retornar o documento do cliente formatado.
+CREATE OR REPLACE FUNCTION FORMATADOC
+(VDOC IN CLIENTE.DOC_CLIENTE%TYPE)
+RETURN VARCHAR2
+IS
+VDOCFORMATADO VARCHAR2(19)
+BEGIN
+IF (LENGTH(VDOC) = 11) THEN 
+	VDOCFORMATADO :=SUBSTR(VDOC,1,3) ||"."||SUBSTR(VDOC,4,3) || '.'
+|| SUBSTR(VDOC,7,3) ||'-'|| SUBSTR(VDOC,10);
+ELSIF(LENGTH(VDOC) = 14) THEN 
+	VDOCFORMATADO := SUBSTR(VDOC,1,2) ||'.'||SUBSTR(VDOC,3,3) ||'.'
+|| SUBSTR(VDOC,5,3) ||'/'|| SUBSTR(VDOC,9,4) ||'-'|| SUBSTR(VDOC,13);
+ELSE
+	VDOCFORMATADO :=VDOC;
+END IF;
+RETURN VDOCFORMATADO;
+END;
+
+--testando a função FORMATADOC
+SELECT NOM_CLIENTE,FROMATADOC(DOC_CLIENTE) DOCUMENTO
+FROM CLIENTE;
+
+--função para retornar a idade do cliente.
+CREATE OR REPLACE FUNCTION IDADE
+(VDTN IN CLIENTE.DTN_CLIENTE%TYPE)
+RETURN NUMBER;
+IS
+VIDADE NUMBER(3);
+BEGIN
+VIDADE := TRUNC(MONTHS_BETWEEN(SYSDATE,VDTN)/12);
+RETURN VIDADE;
+END;
+
+--testando a função idade.
+ SELECT NOM_CLIENTE,IDADE(DTN_CLIENTE) IDADE FROM CLIENTE;

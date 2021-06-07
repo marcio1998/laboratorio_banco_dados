@@ -1,0 +1,68 @@
+Criação de Sequência. - gerenciar auto incremento 
+CREATE SEQUENCE "nome_sequência"
+START WITH n- definir o valor inicial da sequência (padrão 1)
+INCREMENT BY n- definir o valor icremental da sequência(padrão 1)
+MINVALUE n - o valor mínimo que a squência pode receber (padrão 10^27)
+MAXVALUE n - o valor máximo que a sequência pode receber (padrão 10^27)
+CACHE -  a quantidade de valores que são alocados previamente na SGA (padrão 20 valores)
+*quando a sequência for cíclica não pode ter cache[NO CACHE]
+CYCLE - definir se a sequência será cícica ou não. (se a sequência será reiniciada)[CYCLE | NOCYCLE] (padrão NOCYCLE)
+
+---------------------------------------------------------------------------------------------------------------------
+ALTERAR UMA SEQUÊNCIA.
+
+ALTER SEQUENCE "nome_sequência" parâmetro(s)
+*não é possível alterar o valor inicial de uma sequência.
+
+-EXCLUIR SEQUÊNCIA 
+DROP SEQUENCE "nome_sequência"
+
+-UTILIZAR/MANIPULAR A SEQUÊNCIA.
+CURRVAL - retorna o valor corrente da sequência.
+NEXTVAL - incrementa o valor da sequência.
+---------------------------------------------------------------------------------------------------------------------
+Exemplos Sequência.
+CREATE SEQUENCE SEQ_ID_CATEGORIA
+START WITH 1
+INCREMENT BY 1
+MINVALUE 1
+MAXVALUE 99
+NOCYCLE;
+
+CREATE SEQUENCE SEQ_ID_PRODUTO
+START WITH 1
+INCREMENT BY 1
+MINVALUE 1
+MAXVALUE 9999
+NOCYCLE;
+
+
+SELECT * FROM USER_SEQUENCES;
+
+CREATE SEQUENCE SENHA
+START WITH 1
+INCREMENT BY 1
+MINVALUE 1
+MAXVALUE 99
+CYCLE;
+
+select senha.currvalfrom dual;
+
+SELECT SENHA.NEXTVAL FROM DUAL;
+
+INSERIR REGISTRO EM UMA TABELA.
+INSERT
+SÍNTAXE:
+INSERT INTO "nome_tabela" (atributo(s)) VALUES (valor(es));
+
+exemplos INSERT INTO CATEGORIA(id_categoria,nom_categoria) VALUES (SEQ_ID_CATEGORIA.NEXTVAL,'LIMPEZA');
+INSERT INTO CATEGORIA (id_categoria,nom_categoria) VALUES (SEQ_ID_CATEGORIA.NEXTVAL,'BEBIDAS');]
+
+usar commit;
+
+INSERT INTO ITEM_ORCAMENTO (
+  id_produto,id_orcamento,qtd_orcamento,vlr_item_orcamento)
+  VALUES (
+  1,1,3,5000)
+
+

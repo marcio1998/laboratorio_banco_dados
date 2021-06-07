@@ -1,0 +1,71 @@
+TRIGGER (GATIHLO)
+Programa PL/SQL armazenado no banco de dados que é disparado/executado a partir 
+da ocorrência de um evento.
+
+Criação de um gatilho
+Sintaxe:
+CREATE[OR REPLACE] TRIGGER "nome_trigger" 
+[quando] AFTER | BEFORE
+[evento] INSERT | UPDATE |DELETE 
+ON tabela
+[statement | for each row]
+PL/SQL
+
+INSERT - INSERTING
+UPDATE - UPDATING
+DELETE - DELETING
+
+Exemplo de Gatilho
+CREATE TABLE PRODUTO_HIST
+(
+NUM_PRODUTO_HIST NUMBER(5),
+ID_PRODUTO NUMBER(4),
+NOM_PRODUTO VARCHAR2(30),
+ID_CATEGORIA NUMBER(2),
+VLR_PRODUTO_VELHO NUMBER(7,2),
+VLR_PRODUTO_NOVO NUMBER(7,2),
+DTA_PRODUTO_HIST DATE,
+CONSTRAINT PK_PRODUTO_HIST PRIMARY KEY (NUM_PRODUTO_HIST)
+);
+
+CREATE SEQUENCE SEQ_NUM+PRODUTO_HIST
+START WITH 1
+INCREMENT BY 1;
+
+CREATE OR REPLACE TRIGGER HISTORICO_PRODUTO
+AFTER UPDATE ON PRODUTO
+FOR EACH ROW
+BEGIN
+INSERT PRODUTO_HIST VALUES(SEQ_NUM_PRODUTO_HIST.NEXTVAL, :NEW,ID_PRODUTO,:NEW.NOM_PRODUTO,:NEW.ID_CATEGORIA,
+:OLD.VLR_PRODUTO,:NEW.VLR_PRODUTO,SYSDATE);
+END;
+
+-- Tabela USER_TRIGGERS
+armazena as triggers criadas pelos usuarios
+DESC USER_TRIGGERS
+
+-- listar o nome dos gastilhos criados
+SELECT TRIGGER_NAME FORM USER_TRIGGERS;
+
+--TESTANDO O DATILHO
+UPDATE PRODUTO SET VLR_PRODUTO = 43.5 WHERE ID_PRODUTO = 20;
+
+SELECT * FROM PRODUTO;
+SELECT * FROM PRODUTO_HIST;
+
+
+
+CLIENTE
+cpf_cliente
+nom_cliente
+dtn_cliente
+
+:new.cpf_cliente
+:old.cpf_cliente
+
+:new.nom_cliente
+:old.nom_cliente
+
+:new.dtn_cliente
+:old.dtn_cliente
+

@@ -1,0 +1,52 @@
+FUNÇÕES PARA MANIPULAÇÃO DE DADOS NUMÉRICOS.
+
+ABS() - Retorna o valor absoluto de um número.
+
+SELECT ABS(-50),ABS(-1200) FROM DUAL;
+
+UPDATE PRODUTO SET VLR_PRODUTO = -1.50
+WHERE ID_PRODUTO = 1;
+
+SELECT NOM_PRODUTO, ABS(VLR_PRODUTO)
+VLR_PRODUTO FROM PRODUTO;
+
+SELECT NOM_PRODUTO,VLR_PRODUTO FROM PRODUTO;
+
+CEIL() - RETORNA O MAIOR INTEIRO
+SELECT CEIL(-10.4),CEIL(-9.9),CEIL(9.9) FROM DUAL;
+
+FLOOR() - Retorna o maior inteiro menor ou igual ao valor informado (n).
+SELECT FLOOR(-10.4), FLOOR(-9.9), FLOOR(9.9) FROM DUAL;
+
+MOD() - Retorna o resto da divisão, ou seja, função módulo.
+Sintaxe:
+MOD(n1,n2) = retorna o resto da divisão de n1 por n2.
+SELECT MOD(9,2) RESTO FROM DUAL;
+
+POWER() - retorna a exponenciação de um número a potência de outro.
+SELECT POWER(3,3) RESULTADO FROM DUAL;
+
+TRUNC() - truncar um número, ou seja, eliminar casa decimais
+
+SELECT TRUNC(10.50333) FROM DUAL;
+
+SELECT TRUNC(VLR_PRODUTO) FROM PRODUTO;
+
+ROUND() - arredondamento de um número, pode-se informar a quantidade de dígitos de precisão(casas decimais).
+SELECT ROUND(10.50833,2) FROM DUAL;
+SELECT ROUND(10.50333,2) FROM DUAL;
+
+SIGN()- Retrona 1 se o valor for positivo, retorna
+-1 se o valor for negativo e 0 se o valor for zero.
+SELECT SIGN(-1000) NEGATIVO, SIGN(1000) POSITIVO, SIGN(0) ZERO FROM DUAL;
+
+FUNÇÕES PARA MANIPULAÇÃO DE DATAS.
+MONTHS_BETWEEN() - Retorna a diferença em meses entre duas datas.
+Sintaxe: 
+MONTHS_BETWEEN(data1,data2)
+SELECT MONTHS_BETWEEN(SYSDATE,DTN_CLIENTE) FROM CLIENTE;
+SELECT MONTHS_BETWEEN(SYSDATE,DTN_CLIENTE)/12 FROM CLIENTE;
+
+--Mostara a idade dos clientes
+SELECT TRUNC(MONTHS_BETWEEN(SYSDATE,DTN_CLIENTE)/12) IDADE FROM CLIENTE;
+

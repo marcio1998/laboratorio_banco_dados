@@ -1,0 +1,103 @@
+Estrutura de um código PL/SQL
+DECLARE(opcional)
+--declaração das variáveis (quando houver necessidade)
+BEGIN(obrigatório)
+--instruções SQL e PL/SQL
+EXCEPTION(opcional)
+--tratamento de erros
+END;(obrigatório)
+
+DECALRAÇÃO DE VARIÁVEIS.
+nome_variável tipo_dados (semelhante a declarar um atributo).
+
+ATRIBUIR VALOR PARA UMA VARIÁVEL.
+direita por meio de :=
+indireta (resultado de uma consulta) por meio da claúsula INTO.
+
+DECLARE
+VID_CLIENTE NUMBER(4);
+VNOM_CLIENTE VARCHAR2(40);
+
+VID_CLIENTE := 5;
+
+SELECT NOM_CLIENTE INTO VNOM_CLIENTE FROM CLIENTE WHERE ID_CLIENTE = VID_CLIENTE;
+
+MOSTRAR MENSAGEM NA TELA
+DMBS_OUTPUT.PUT_LINE() -- mostrar mensagem na tela.
+(*)NECESSÁRIO ATUALIZAR A VARIÁVEL DE AMBIENTE SERVEROUTPUT.
+
+SET SERVEROUTPUT ON;
+
+-- Bloco anômino para ler uma taxa de correção e aplicar essa taxa de correção aos valores dos produtos.
+
+DECLARE 
+VTAXA NUMBER(4,2);
+BEGIN
+VTAXA :=&VTAXA;
+UPDATE PRODUTO SET VLR_PRODUTO = VLR_PRODUTO + VLR_PRODUTO * (VTAXA/100);
+EXCEPTION
+WHEN OTHERS THEN
+DBMS_OUTPUT.PUT_LINE('erro na execução da atualização');
+END;
+
+--Bloco anônimo para ler o código de um cliente e mostrar seu nome e sua data de nascimento
+DECLARE
+VID_CLIENTE NUMBER(4);
+VNOM_CLIENTE VARCHAR2(30);
+VDTN_CLIENTE DATE;
+BEGIN
+VID_CLIENTE := &VID_CLIENTE;
+SELECT NOM_CLIENTE,DTN_CLIENTE INTO VNOM_CLIENTE,VDTN_CLIENTE FROM CLIENTE WHERE COD_CLIENTE = VID_CLIENTE;
+DBMS_OUTPUT.PUT_LINE('Nome:' || VNOM_CLIENTE);
+DBMS_OUTPUT.PUT_LINE('Data Nascimento:' || VDTN_CLIENTE);
+EXCEPTION
+WHEN OTHERS THEN
+DBMS_OUTPUT.PUT_LINE('Erro de execução ou cliente não cadastrado...');
+END;
+
+--Estrutura condicional IF.. ELSIF ..ELSE
+Sintaxe:
+IF(condição) THEN
+--instruções para condição verdadeira
+ELSIF(condição2) THEN
+--instrução para condição2 verdadeira
+ELSE
+--instruções quando as condições anteriores forem falsas;
+END IF;
+
+--MANUTENÇÃO DA TABELA CLIENTE
+ALTER TABLE CLIENTE DROP COLUMN CPF_CLIENTE;
+ALTER TABLE CLIENTE ADD DOC_CLIENTE VARCHAR2(14);
+UPDATE CLIENTE SET DOC_CLIENTE = '12345678901' WHERE ID_CLIENTE = 1;
+INSERT INTO CLIENTE VALUES(2,'Magazine Luiza','01/01/1970','12345678901234');
+
+--Bloco anônimo para leo o ´codigo do cliente  e mostrar o nome e a classificação (pessoa física ou jurídica)
+
+DECLARE
+VID_CLIENTE(6);
+VNOM_CLIENTE VARCHAR2(30);
+VCAT_CLIENTE VARCHAR2(20);
+VDOC_CLIENTE NUMBER(2);
+--início do bloco PL/SQL
+BEGIN
+--entrada de dados.
+VID_CLIENTE := &VID_CLIENTE;
+SELECT NOM_CLIENTE, LENGTH(DOC_CLIENTE) INTO VNOM_CLIENTE, VDOC_CLIENTE FROM CLIENTE WHERE ID_CLIENTE = VID_CLIENTE;
+
+IF(VDOC_CLIENTE = 11) THEN
+    VCAT_CLIENTE := 'PESSOA FISICA';
+ELSIF(VDOC_CLIENTE = 14) THEN
+    VCAT_CLIENTE :='PESSOA JURIDICA';
+ELSE
+    VCAT_CLIENTE := 'DOCUMENTO INVALIDO';
+END IF;
+
+--saída de dados.
+DBMS_OUTPUT.PUT_LINE('Nome:'|| VNOM_CLIENTE);
+DBMS_OUTPUT.PUT_LINE('Categoria: ' || VCAR_CLIENTE);
+
+--tratamentos de erros.
+EXCEPTION
+WHEN OTHERS THEN
+DBMS_OUTPUT.PUT_LINE('erro na execução ou cliente não cadastrado...');
+END;
